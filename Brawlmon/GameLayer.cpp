@@ -1,8 +1,8 @@
-#include "GameLayer.h"
-#include "Game.h"
-
 #include <unordered_set>
 #include <fstream>
+
+#include "GameLayer.h"
+#include "Game.h"
 
 GameLayer::GameLayer()
 	: Layer()
@@ -24,10 +24,7 @@ void GameLayer::processControls()
 
 void GameLayer::update()
 {
-
 	calculateScroll();
-
-	
 }
 
 void GameLayer::draw()
@@ -71,7 +68,8 @@ void GameLayer::keysToControls(SDL_Event event)
 	{
 		int code = event.key.keysym.sym;
 		// Levantada
-		switch (code) {
+		switch (code)
+		{
 		case SDLK_d: // derecha
 			if (controlMoveX == 1)
 			{
@@ -79,17 +77,20 @@ void GameLayer::keysToControls(SDL_Event event)
 			}
 			break;
 		case SDLK_a: // izquierda
-			if (controlMoveX == -1) {
+			if (controlMoveX == -1)
+			{
 				controlMoveX = 0;
 			}
 			break;
 		case SDLK_w: // arriba
-			if (controlMoveY == -1) {
+			if (controlMoveY == -1)
+			{
 				controlMoveY = 0;
 			}
 			break;
 		case SDLK_s: // abajo
-			if (controlMoveY == 1) {
+			if (controlMoveY == 1)
+			{
 				controlMoveY = 0;
 			}
 			break;
@@ -113,14 +114,17 @@ void GameLayer::gamepadToControls(SDL_Event event)
 	Layer::gamepadToControls(event);
 }
 
-void GameLayer::loadMap(std::string name) {
+void GameLayer::loadMap(std::string name)
+{
 	std::ifstream file(name);
 	int row = 0;
 	std::string line;
 
-	while (std::getline(file, line)) {
+	while (std::getline(file, line))
+	{
 		mapWidth = line.size();
-		for (int column = 0; column < line.size(); column++) {
+		for (int column = 0; column < line.size(); column++)
+		{
 			int x = 40 / 2 + column * 40;
 			int y = 32 + row * 32;
 			loadMapObject(line[column], x, y);
@@ -132,10 +136,12 @@ void GameLayer::loadMap(std::string name) {
 	mapHeight = row;
 }
 
-void GameLayer::loadMapObject(char character, int x, int y) {
-	
+void GameLayer::loadMapObject(char character, int x, int y)
+{
+
 }
 
-void GameLayer::calculateScroll() {
-	
+void GameLayer::calculateScroll()
+{
+
 }

@@ -8,7 +8,8 @@ PauseLayer::PauseLayer(Layer* layer)
 	init();
 }
 
-void PauseLayer::init() {
+void PauseLayer::init() 
+{
 	background = new Background("res/mensaje_como_jugar.png", WIDTH * .5f, HEIGHT * .5f);
 }
 
@@ -47,14 +48,17 @@ void PauseLayer::gamepadToControls(SDL_Event event)
 	Layer::gamepadToControls(event);
 }
 
-void PauseLayer::processControls() {
+void PauseLayer::processControls() 
+{
 	Layer::processControls();
-	if (controlContinue) {
+	if (controlContinue) 
+	{
 		controlContinue = false;
 		Game::getInstance().layer = layer;
 	}
 }
-void PauseLayer::draw() {
+void PauseLayer::draw() 
+{
 	background->draw();
 
 	SDL_RenderPresent(Game::getRenderer());

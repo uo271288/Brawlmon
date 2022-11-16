@@ -23,4 +23,3 @@ private:
 	Background* background;
 	Actor* button;
 };
-

@@ -5,11 +5,13 @@
 
 #include "BoundingBox.h"
 
-enum class Orientation {
+enum class Orientation 
+{
 	Right, Left
 };
 
-enum class State {
+enum class State 
+{
 	Moving, Jumping, Dying, Dead, Shooting
 };
 

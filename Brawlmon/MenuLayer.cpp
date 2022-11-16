@@ -8,7 +8,8 @@ MenuLayer::MenuLayer()
 	init();
 }
 
-void MenuLayer::init() {
+void MenuLayer::init() 
+{
 	background = new Background("res/menu_fondo.png", WIDTH * .5f, HEIGHT * .5f);
 	button = new Actor("res/boton_jugar.png", WIDTH * .5f, HEIGHT * .7f, 232, 72);
 }
@@ -39,7 +40,8 @@ void MenuLayer::mouseToControls(SDL_Event event)
 
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (button->containsPoint(motionX, motionY)) {
+		if (button->containsPoint(motionX, motionY)) 
+		{
 			controlContinue = true;
 		}
 	}
@@ -51,14 +53,17 @@ void MenuLayer::gamepadToControls(SDL_Event event)
 	Layer::gamepadToControls(event);
 }
 
-void MenuLayer::processControls() {
+void MenuLayer::processControls() 
+{
 	Layer::processControls();
-	if (controlContinue) {
+	if (controlContinue) 
+	{
 		controlContinue = false;
 		Game::getInstance().layer = new GameLayer();
 	}
 }
-void MenuLayer::draw() {
+void MenuLayer::draw() 
+{
 	background->draw();
 	button->draw();
 

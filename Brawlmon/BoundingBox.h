@@ -1,7 +1,9 @@
 #pragma once
 
 #include <unordered_set>
-struct Vector2d {
+
+struct Vector2d 
+{
 	int x, y;
 };
 
