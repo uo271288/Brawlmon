@@ -12,7 +12,7 @@ GameLayer::GameLayer()
 
 void GameLayer::init()
 {
-	background = new Background("res/fondo_2.png", WIDTH * 0.5, HEIGHT * 0.5);
+	background = new Background("res/gym_background.png", WIDTH * 0.5, HEIGHT * 0.3);
 
 	loadMap("res/1.txt");
 }

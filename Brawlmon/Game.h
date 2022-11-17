@@ -7,10 +7,10 @@
 #include <SDL_image.h>
 
 #include "Layer.h"
-#include "MenuLayer.h"
+#include "GameLayer.h"
 
-#define WIDTH 480
-#define HEIGHT 320
+#define HEIGHT 480
+#define WIDTH 380
 #define GRAVITY 1
 
 class Game

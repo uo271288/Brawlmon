@@ -9,13 +9,13 @@ Game::Game() {
 	if (SDL_CreateWindowAndRenderer(WIDTH, HEIGHT, 0, &window, &renderer) < 0) {
 		std::cout << "Error Window y Renderer" << SDL_GetError() << std::endl;
 	}
-	SDL_SetWindowTitle(window, "Juego de Naves");
+	SDL_SetWindowTitle(window, "Brawlmon");
 	// Escalado de imágenes de calidad 
 	// https://wiki.libsdl.org/SDL_HINT_RENDER_SCALE_QUALITY
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
 	TTF_Init();
-	font = TTF_OpenFont("res/sans.ttf", 24);
+	font = TTF_OpenFont("res/brawlmon_main_font.ttf", 24);
 }
 
 void Game::loop() {
@@ -38,7 +38,7 @@ void Game::loop() {
 }
 
 void Game::start() {
-	layer = new MenuLayer();
+	layer = new GameLayer();
 
 	loopActive = true; // bucle activo
 	loop();
