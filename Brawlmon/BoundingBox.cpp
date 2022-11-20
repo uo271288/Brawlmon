@@ -13,6 +13,7 @@ void BoundingBox::update(int x, int y)
 	top = y - height / 2;
 	bottom = y + height / 2;
 }
+
 bool BoundingBox::overlaps(BoundingBox& other) 
 {
 	return other.left < right
@@ -20,6 +21,7 @@ bool BoundingBox::overlaps(BoundingBox& other)
 		&& other.top < bottom
 		&& other.bottom > top;
 }
+
 Vector2d BoundingBox::sweep(std::unordered_set<class Actor*> actors, Vector2d& delta) 
 {
 	int halfWidth = width / 2;

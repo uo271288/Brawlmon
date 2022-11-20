@@ -14,6 +14,8 @@ void GameLayer::init()
 {
 	background = new Background("res/gym_background.png", WIDTH * 0.5, HEIGHT * 0.3);
 
+	tiles.clear();
+
 	loadMap("res/1.txt");
 }
 
@@ -30,6 +32,11 @@ void GameLayer::update()
 void GameLayer::draw()
 {
 	background->draw();
+
+	for (auto const& tile : tiles)
+	{
+		tile->draw(scrollX, scrollY);
+	}
 
 	SDL_RenderPresent(Game::getRenderer());
 }
@@ -125,8 +132,8 @@ void GameLayer::loadMap(std::string name)
 		mapWidth = line.size();
 		for (int column = 0; column < line.size(); column++)
 		{
-			int x = 40 / 2 + column * 40;
-			int y = 32 + row * 32;
+			int x = 14 / 2 + column * 14;
+			int y = 22 + row * 22;
 			loadMapObject(line[column], x, y);
 			std::cout << line[column];
 		}
@@ -138,7 +145,17 @@ void GameLayer::loadMap(std::string name)
 
 void GameLayer::loadMapObject(char character, int x, int y)
 {
-
+	switch (character)
+	{
+	case 'F':
+	{
+		Tile* tile = new Tile("res/fence.png", x, y, 14, 22);
+		tile->y -= tile->height / 2;
+		tile->boundingBox.update(tile->x, tile->y);
+		tiles.emplace_back(tile);
+		break;
+	}
+	}
 }
 
 void GameLayer::calculateScroll()

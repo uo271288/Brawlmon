@@ -11,7 +11,6 @@
 
 #define HEIGHT 480
 #define WIDTH 380
-#define GRAVITY 1
 
 class Game
 {
