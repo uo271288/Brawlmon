@@ -6,6 +6,8 @@
 #include "Background.h"
 #include "PauseLayer.h"
 #include "Tile.h"
+#include "Player.h"
+#include "Space.h"
 
 class GameLayer : public Layer
 {
@@ -25,6 +27,8 @@ public:
 	void mouseToControls(SDL_Event event) override;
 	void gamepadToControls(SDL_Event event) override;
 
+	Space* space;
+	Player* player;
 	Background* background;
 
 	std::list<Tile*> tiles;

@@ -12,6 +12,7 @@ GameLayer::GameLayer()
 
 void GameLayer::init()
 {
+	space = new Space();
 	background = new Background("res/gym_background.png", WIDTH * 0.5, HEIGHT * 0.3);
 
 	tiles.clear();
@@ -22,10 +23,16 @@ void GameLayer::init()
 void GameLayer::processControls()
 {
 	Layer::processControls();
+
+	player->moveX(controlMoveX);
+	player->moveY(controlMoveY);
 }
 
 void GameLayer::update()
 {
+	space->update();
+	player->update();
+
 	calculateScroll();
 }
 
@@ -35,8 +42,10 @@ void GameLayer::draw()
 
 	for (auto const& tile : tiles)
 	{
-		tile->draw(scrollX, scrollY);
+		tile->draw();
 	}
+
+	player->draw(scrollX, scrollY);
 
 	SDL_RenderPresent(Game::getRenderer());
 }
@@ -63,14 +72,12 @@ void GameLayer::keysToControls(SDL_Event event)
 		case SDLK_s: // abajo
 			controlMoveY = 1;
 			break;
-		case SDLK_SPACE: // dispara
-			controlShoot = true;
-			break;
 		case SDLK_TAB:
 			Game::getInstance().layer = new PauseLayer(this);
 			break;
 		}
 	}
+	
 	if (event.type == SDL_KEYUP)
 	{
 		int code = event.key.keysym.sym;
@@ -100,9 +107,6 @@ void GameLayer::keysToControls(SDL_Event event)
 			{
 				controlMoveY = 0;
 			}
-			break;
-		case SDLK_SPACE: // dispara
-			controlShoot = false;
 			break;
 		}
 	}
@@ -153,12 +157,28 @@ void GameLayer::loadMapObject(char character, int x, int y)
 		tile->y -= tile->height / 2;
 		tile->boundingBox.update(tile->x, tile->y);
 		tiles.emplace_back(tile);
+		space->addStaticActor(tile);
 		break;
 	}
+	case 'P':
+		player = new Player(x, y);
+		player->y -= player->height;
+		player->boundingBox.update(player->x, player->y);
+		space->addDynamicActor(player);
+		break;
 	}
 }
 
 void GameLayer::calculateScroll()
 {
+	if (player->y > HEIGHT * .4f
+		|| player->y < mapHeight - HEIGHT * .4f) {
 
+		if (player->y - scrollY < HEIGHT * .4f) {
+			scrollY = player->y - HEIGHT * .4f;
+		}
+		if (player->y - scrollY > HEIGHT * .6f) {
+			scrollY = player->y - HEIGHT * .6f;
+		}
+	}
 }
