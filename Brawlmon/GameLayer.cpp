@@ -24,8 +24,14 @@ void GameLayer::processControls()
 {
 	Layer::processControls();
 
+	if (player->x < 45)player->x = 45;
+	if (player->x > 325)player->x = 325;
+	if (player->y > 410)player->y = 410;
+	if (player->y < -50)player->y = -50;
+
 	player->moveX(controlMoveX);
 	player->moveY(controlMoveY);
+
 }
 
 void GameLayer::update()
@@ -38,11 +44,11 @@ void GameLayer::update()
 
 void GameLayer::draw()
 {
-	background->draw();
+	background->draw(scrollX, scrollY);
 
 	for (auto const& tile : tiles)
 	{
-		tile->draw();
+		tile->draw(scrollX, scrollY);
 	}
 
 	player->draw(scrollX, scrollY);
@@ -77,7 +83,7 @@ void GameLayer::keysToControls(SDL_Event event)
 			break;
 		}
 	}
-	
+
 	if (event.type == SDL_KEYUP)
 	{
 		int code = event.key.keysym.sym;
@@ -155,6 +161,7 @@ void GameLayer::loadMapObject(char character, int x, int y)
 	{
 		Tile* tile = new Tile("res/fence.png", x, y, 14, 22);
 		tile->y -= tile->height / 2;
+		//fix the bounding box. the bottom collission must be with player feet
 		tile->boundingBox.update(tile->x, tile->y);
 		tiles.emplace_back(tile);
 		space->addStaticActor(tile);
@@ -171,14 +178,17 @@ void GameLayer::loadMapObject(char character, int x, int y)
 
 void GameLayer::calculateScroll()
 {
-	if (player->y > HEIGHT * .4f
-		|| player->y < mapHeight - HEIGHT * .4f) {
+	if (player->y > HEIGHT * .1f
+		|| player->y < HEIGHT * .9f)
+	{
 
-		if (player->y - scrollY < HEIGHT * .4f) {
-			scrollY = player->y - HEIGHT * .4f;
+		if (player->y - scrollY < HEIGHT * .1f)
+		{
+			scrollY = player->y - HEIGHT * .1f;
 		}
-		if (player->y - scrollY > HEIGHT * .6f) {
-			scrollY = player->y - HEIGHT * .6f;
+		if (player->y - scrollY > HEIGHT * .9f)
+		{
+			scrollY = player->y - HEIGHT * .9f;
 		}
 	}
 }

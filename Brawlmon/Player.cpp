@@ -57,6 +57,7 @@ void Player::update()
 	{
 		animation = vx == 0 ? aIdleLeft : aWalkingLeft;
 	}
+	boundingBox.update(x, y);
 }
 
 void Player::moveX(float direction) {
