@@ -8,6 +8,7 @@
 #include "Tile.h"
 #include "Player.h"
 #include "Space.h"
+#include "Enemy.h"
 
 class GameLayer : public Layer
 {
@@ -31,7 +32,8 @@ public:
 	Player* player;
 	Background* background;
 
-	std::list<Tile*> tiles;
+	std::list<Tile*> tiles; 
+	std::list<Enemy*> enemies;
 
 	bool controlShoot = false;
 	int controlMoveX = 0;

@@ -16,6 +16,7 @@ void GameLayer::init()
 	background = new Background("res/gym_background.png", WIDTH * 0.5, HEIGHT * 0.3);
 
 	tiles.clear();
+	enemies.clear();
 
 	loadMap("res/1.txt");
 }
@@ -36,10 +37,25 @@ void GameLayer::processControls()
 
 void GameLayer::update()
 {
+	std::unordered_set<Enemy*> deleteEnemies;
+
 	space->update();
 	player->update();
 
 	calculateScroll();
+
+	for (auto const& enemy : enemies)
+	{
+		enemy->update();
+	}
+
+	for (auto const& delEnemy : deleteEnemies)
+	{
+		enemies.remove(delEnemy);
+		space->removeDynamicActor(delEnemy);
+	}
+	deleteEnemies.clear();
+
 }
 
 void GameLayer::draw()
@@ -49,6 +65,11 @@ void GameLayer::draw()
 	for (auto const& tile : tiles)
 	{
 		tile->draw(scrollX, scrollY);
+	}
+
+	for (auto const& enemy : enemies)
+	{
+		enemy->draw(scrollX, scrollY);
 	}
 
 	player->draw(scrollX, scrollY);
@@ -168,11 +189,24 @@ void GameLayer::loadMapObject(char character, int x, int y)
 		break;
 	}
 	case 'P':
+	{
 		player = new Player(x, y);
 		player->y -= player->height;
 		player->boundingBox.update(player->x, player->y);
 		space->addDynamicActor(player);
 		break;
+	}
+	case 'H':
+	case 'V':
+	{
+		Enemy* enemy = new Enemy(character == 'H' ? "res/rival1_walking.png" : "res/rival2_walking.png", 
+			x, y, character == 'H' ? State::MovingHorizontal : State::MovingVertical);
+		enemy->y -= enemy->height / 2;
+		enemy->boundingBox.update(enemy->x, enemy->y);
+		enemies.emplace_back(enemy);
+		space->addDynamicActor(enemy);
+		break;
+	}
 	}
 }
 

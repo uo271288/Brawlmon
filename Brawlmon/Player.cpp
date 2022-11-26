@@ -61,11 +61,11 @@ void Player::update()
 }
 
 void Player::moveX(float direction) {
-	vx = direction * 3;
+	vx = direction;
 }
 
 void Player::moveY(float direction) {
-	vy = direction * 3;
+	vy = direction;
 }
 
 void Player::draw(int scrollX, int scrollY) {
