@@ -4,5 +4,5 @@ class Tile :
     public Actor
 {
 public:
-    Tile(std::string filename, int x, int y, int width, int height);
+    Tile(std::string filename, float x, float y, int width, int height);
 };

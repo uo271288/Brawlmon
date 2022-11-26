@@ -20,10 +20,10 @@ class Actor
 public:
 	Actor(std::string filename, float x, float y, int width, int height);
 
-	virtual void draw(int scrollX = 0, int scrollY = 0);
+	virtual void draw(float scrollX = 0, float scrollY = 0);
 
 	bool isOverlapping(Actor* actor);
-	bool containsPoint(int pointX, int pointY);
+	bool containsPoint(float pointX, float pointY);
 
 	bool clicked = false;
 

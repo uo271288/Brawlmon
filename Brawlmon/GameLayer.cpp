@@ -25,11 +25,6 @@ void GameLayer::processControls()
 {
 	Layer::processControls();
 
-	if (player->x < 45)player->x = 45;
-	if (player->x > 325)player->x = 325;
-	if (player->y > 410)player->y = 410;
-	if (player->y < -50)player->y = -50;
-
 	player->moveX(controlMoveX);
 	player->moveY(controlMoveY);
 
@@ -161,10 +156,10 @@ void GameLayer::loadMap(std::string name)
 	while (std::getline(file, line))
 	{
 		mapWidth = line.size();
-		for (int column = 0; column < line.size(); column++)
+		for (unsigned int column = 0; column < line.size(); column++)
 		{
-			int x = 14 / 2 + column * 14;
-			int y = 22 + row * 22;
+			float x = 14 / 2 + column * 14;
+			float y = 22 + row * 22;
 			loadMapObject(line[column], x, y);
 			std::cout << line[column];
 		}
@@ -174,7 +169,7 @@ void GameLayer::loadMap(std::string name)
 	mapHeight = row;
 }
 
-void GameLayer::loadMapObject(char character, int x, int y)
+void GameLayer::loadMapObject(char character, float x, float y)
 {
 	switch (character)
 	{

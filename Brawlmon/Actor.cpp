@@ -8,7 +8,7 @@ Actor::Actor(std::string filename, float x, float y, int width, int height)
 	texture = Game::getTexture(filename);
 }
 
-void Actor::draw(int scrollX, int scrollY)
+void Actor::draw(float scrollX, float scrollY)
 {
 	SDL_Rect source
 	{
@@ -32,7 +32,7 @@ bool Actor::isOverlapping(Actor* actor)
 	return boundingBox.overlaps(actor->boundingBox);
 }
 
-bool Actor::containsPoint(int pointX, int pointY)
+bool Actor::containsPoint(float pointX, float pointY)
 {
 	return boundingBox.contains(pointX, pointY);
 }

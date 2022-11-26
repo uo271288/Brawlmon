@@ -39,9 +39,34 @@ void Enemy::update() {
 		}
 		break;
 	}
+
+	if (x < 45) 
+	{
+		x = 45;
+		vx = 0;
+	}
+
+	if (x > 325) 
+	{
+		x = 325;
+		vx = 0;
+	}
+
+	if (y > 410) 
+	{
+		y = 410;
+		vy = 0;
+	}
+
+	if (y < -50) 
+	{
+		y = -50;
+		vy = 0;
+	}
+
 	boundingBox.update(x, y);
 }
 
-void Enemy::draw(int scrollX, int scrollY) {
+void Enemy::draw(float scrollX, float scrollY) {
 	animation->draw(x - scrollX, y - scrollY);
 }

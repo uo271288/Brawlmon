@@ -9,12 +9,9 @@ public:
 	Player(float x, float y);
 
 	void update();
-	void draw(int scrollX, int scrollY) override;
+	void draw(float scrollX, float scrollY) override;
 	void moveX(float direction);
 	void moveY(float direction);
-
-	int shootCadence = 30;
-	int shootTime = 0;
 
 	Animation* animation;
 	Animation* aIdleRight;

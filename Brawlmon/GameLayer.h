@@ -21,7 +21,7 @@ public:
 	void draw() override;
 
 	void loadMap(std::string name);
-	void loadMapObject(char character, int x, int y);
+	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
 
 	void keysToControls(SDL_Event event) override;

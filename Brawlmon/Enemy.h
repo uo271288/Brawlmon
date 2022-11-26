@@ -8,7 +8,7 @@ class Enemy : public Actor
 public:
 	Enemy(std::string filename, float x, float y, State state);
 	void update();
-	void draw(int scrollX, int scrollY) override;
+	void draw(float scrollX, float scrollY) override;
 	bool hit(Player* actor);
 
 	Animation* aWalkingRight;
@@ -19,5 +19,5 @@ public:
 
 	State state = State::Moving;
 
-	int vxIntelligence = 0, vyIntelligence = 0;
+	float vxIntelligence = 0, vyIntelligence = 0;
 };

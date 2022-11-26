@@ -1,12 +1,12 @@
 #include "BoundingBox.h"
 #include "Actor.h"
 
-BoundingBox::BoundingBox(int x, int y, int width, int height) :width(width), height(height) 
+BoundingBox::BoundingBox(float x, float y, int width, int height) :width(width), height(height)
 {
 	update(x, y);
 }
 
-void BoundingBox::update(int x, int y) 
+void BoundingBox::update(float x, float y)
 {
 	left = x - width / 2;
 	right = x + width / 2;
@@ -26,10 +26,10 @@ Vector2d BoundingBox::sweep(std::unordered_set<class Actor*> actors, Vector2d& d
 {
 	int halfWidth = width / 2;
 	int halfHeight = height / 2;
-	int x = left + halfWidth;
-	int y = top + halfHeight;
-	int oldX = x;
-	int oldY = y;
+	float x = left + halfWidth;
+	float y = top + halfHeight;
+	float oldX = x;
+	float oldY = y;
 
 	touchLeft = false;
 	touchRight = false;
@@ -79,7 +79,7 @@ Vector2d BoundingBox::sweep(std::unordered_set<class Actor*> actors, Vector2d& d
 	return { x - oldX,y - oldY };
 }
 
-bool BoundingBox::contains(int x, int y)
+bool BoundingBox::contains(float x, float y)
 {
 	return left <= x
 		&& right >= x

@@ -4,21 +4,21 @@
 
 struct Vector2d 
 {
-	int x, y;
+	float x, y;
 };
 
 class BoundingBox
 {
 public:
-	BoundingBox(int x, int y, int width, int height);
+	BoundingBox(float x, float y, int width, int height);
 
-	void update(int x, int y);
+	void update(float x, float y);
 	bool overlaps(BoundingBox& other);
 	Vector2d sweep(std::unordered_set<class Actor*> actors, Vector2d& delta);
 
-	bool contains(int x, int y);
+	bool contains(float x, float y);
 
 	int width, height;
-	int left, right, top, bottom;
+	float left, right, top, bottom;
 	bool touchLeft, touchRight, touchTop, touchBottom;
 };
