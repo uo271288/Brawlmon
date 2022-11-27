@@ -19,6 +19,8 @@ void GameLayer::init()
 	enemies.clear();
 
 	loadMap("res/1.txt");
+
+	Game::getInstance().scale();
 }
 
 void GameLayer::processControls()
@@ -46,7 +48,7 @@ void GameLayer::update()
 		{
 			enemy->defeat();
 			player->stop();
-			// TODO: load combat layer
+			Game::getInstance().layer = new CombatLayer();
 		}
 	}
 

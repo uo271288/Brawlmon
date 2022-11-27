@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Space.h"
 #include "Enemy.h"
+#include "CombatLayer.h"
 
 class GameLayer : public Layer
 {
