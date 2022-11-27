@@ -12,6 +12,8 @@ public:
 	void draw(float scrollX, float scrollY) override;
 	void moveX(float direction);
 	void moveY(float direction);
+	bool hit(Actor* enemy);
+	void stop();
 
 	Animation* animation;
 	Animation* aIdleRight;

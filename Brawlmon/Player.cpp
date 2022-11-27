@@ -77,3 +77,21 @@ void Player::moveY(float direction) {
 void Player::draw(float scrollX, float scrollY) {
 	animation->draw(x - scrollX, y - scrollY);
 }
+
+bool Player::hit(Actor* enemy)
+{
+	bool overlap = false;
+	if (enemy->x - enemy->width / 2 <= x + width / 2
+		&& enemy->x + enemy->width / 2 >= x - width / 2
+		&& enemy->y + enemy->height / 2 >= y - height / 2
+		&& enemy->y - enemy->height / 2 <= y + height / 2) {
+		overlap = true;
+	}
+	return overlap;
+}
+
+void Player::stop()
+{
+	x -= vx * 2;
+	y -= vy * 2;
+}

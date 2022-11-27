@@ -42,7 +42,14 @@ void GameLayer::update()
 	for (auto const& enemy : enemies)
 	{
 		enemy->update();
+		if (player->hit(enemy))
+		{
+			enemy->defeat();
+			player->stop();
+			// TODO: load combat layer
+		}
 	}
+
 
 	for (auto const& delEnemy : deleteEnemies)
 	{

@@ -26,8 +26,16 @@ bool Animation::update() {
 			return true;
 		}
 	}
-	source.x = currentFrameX * frameWidth;
-	source.y = currentFrameY * frameHeight;
+	if (loop)
+	{
+		source.x = currentFrameX * frameWidth;
+		source.y = currentFrameY * frameHeight;
+	}
+	else
+	{
+		source.x = 0;
+	}
+
 	return false;
 }
 

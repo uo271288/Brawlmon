@@ -7,13 +7,13 @@ Enemy::Enemy(std::string filename, float x, float y, State state) :Actor(filenam
 	aWalkingUp = new Animation(filename, width, height, 256, 256, 6, 3, 4, 4);
 	aWalkingDown = new Animation(filename, width, height, 256, 256, 6, 0, 4, 4);
 
-	if (state == State::MovingHorizontal) 
+	if (state == State::MovingHorizontal)
 	{
 		animation = aWalkingLeft;
 		vxIntelligence = -1;
 		vx = -1;
 	}
-	else
+	if (state == State::MovingVertical)
 	{
 		animation = aWalkingUp;
 		vyIntelligence = -1;
@@ -21,7 +21,8 @@ Enemy::Enemy(std::string filename, float x, float y, State state) :Actor(filenam
 	}
 }
 void Enemy::update() {
-	animation->update();
+
+	animationEnded = animation->update();
 	switch (state)
 	{
 	case State::MovingHorizontal:
@@ -38,27 +39,31 @@ void Enemy::update() {
 			vy = vyIntelligence;
 		}
 		break;
+	case State::Defeated:
+		vx = 0;
+		vy = 0;
+		break;
 	}
 
-	if (x < 45) 
+	if (x < 45)
 	{
 		x = 45;
 		vx = 0;
 	}
 
-	if (x > 325) 
+	if (x > 325)
 	{
 		x = 325;
 		vx = 0;
 	}
 
-	if (y > 410) 
+	if (y > 410)
 	{
 		y = 410;
 		vy = 0;
 	}
 
-	if (y < -50) 
+	if (y < -50)
 	{
 		y = -50;
 		vy = 0;
@@ -69,4 +74,10 @@ void Enemy::update() {
 
 void Enemy::draw(float scrollX, float scrollY) {
 	animation->draw(x - scrollX, y - scrollY);
+}
+
+void Enemy::defeat()
+{
+	animation->loop = false;
+	state = State::Defeated;
 }

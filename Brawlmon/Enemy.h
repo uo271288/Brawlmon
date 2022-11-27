@@ -9,7 +9,7 @@ public:
 	Enemy(std::string filename, float x, float y, State state);
 	void update();
 	void draw(float scrollX, float scrollY) override;
-	bool hit(Player* actor);
+	void defeat();
 
 	Animation* aWalkingRight;
 	Animation* aWalkingLeft;
@@ -20,4 +20,5 @@ public:
 	State state = State::Moving;
 
 	float vxIntelligence = 0, vyIntelligence = 0;
+	bool animationEnded = false;
 };
