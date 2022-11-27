@@ -68,9 +68,6 @@ void  Layer::keysToControls(SDL_Event event)
 		case SDLK_ESCAPE:
 			Game::getInstance().loopActive = false;
 			break;
-		case SDLK_1:
-			Game::getInstance().scale();
-			break;
 		}
 	}
 }

@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "CombatLayer.h"
 
 constexpr int FRAME_TIME = 1000 / 30;
 
@@ -38,8 +39,8 @@ void Game::loop() {
 }
 
 void Game::start() {
-	layer = new GameLayer();
-
+	//layer = new GameLayer();
+	layer = new CombatLayer();
 	loopActive = true; // bucle activo
 	loop();
 }
@@ -50,17 +51,12 @@ void Game::scale() {
 	if (scaledToMax) {
 		SDL_DisplayMode PCdisplay;
 		SDL_GetCurrentDisplayMode(0, &PCdisplay);
-		float scaleX = (float)PCdisplay.w / (float)WIDTH;
-		float scaleY = (float)PCdisplay.h / (float)HEIGHT;
-		// Necesitamos la menor de las 2 escalas para no deformar el juego
-		scaleLower = scaleX;
-		if (scaleY < scaleX) {
-			scaleLower = scaleY;
-		}
+		float scaleX = 954;
+		float scaleY = 604;
 		// Cambiar dimensiones ventana
-		SDL_SetWindowSize(window, WIDTH * scaleLower, HEIGHT * scaleLower);
+		SDL_SetWindowSize(window, scaleX, scaleY);
 		// Cambiar escala del render
-		SDL_RenderSetScale(renderer, scaleLower, scaleLower);
+		SDL_RenderSetScale(renderer, 2.5, 1);
 	}
 	else { // Escala Original
 		scaleLower = 1;
