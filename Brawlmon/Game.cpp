@@ -47,12 +47,12 @@ void Game::scale() {
 	if (scaledToMax) {
 		SDL_DisplayMode PCdisplay;
 		SDL_GetCurrentDisplayMode(0, &PCdisplay);
-		float scaleX = 954;
-		float scaleY = 604;
+		float scaleX = 687;
+		float scaleY = 483;
 		// Cambiar dimensiones ventana
 		SDL_SetWindowSize(window, scaleX, scaleY);
 		// Cambiar escala del render
-		SDL_RenderSetScale(renderer, 2.5, 1);
+		SDL_RenderSetScale(renderer, 1.8, .8);
 		SDL_SetWindowPosition(window, 200, 150);
 	}
 	else { // Escala Original

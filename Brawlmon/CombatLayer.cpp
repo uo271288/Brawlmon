@@ -22,12 +22,14 @@ void CombatLayer::processControls()
 
 void CombatLayer::update()
 {
-	
+
 }
 
 void CombatLayer::draw()
 {
 	background->draw();
+
+
 
 	SDL_RenderPresent(Game::getRenderer());
 }
@@ -52,14 +54,14 @@ void CombatLayer::keysToControls(SDL_Event event)
 		// Levantada
 		switch (code)
 		{
-		
+
 		}
 	}
 }
 
 void CombatLayer::mouseToControls(SDL_Event event)
 {
-	
+
 }
 
 void CombatLayer::gamepadToControls(SDL_Event event)
@@ -69,10 +71,10 @@ void CombatLayer::gamepadToControls(SDL_Event event)
 
 void CombatLayer::loadMap(std::string name)
 {
-	
+
 }
 
 void CombatLayer::loadMapObject(char character, float x, float y)
 {
-	
+
 }
