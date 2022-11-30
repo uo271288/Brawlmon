@@ -19,6 +19,8 @@ void GameLayer::init()
 	enemies.clear();
 
 	loadMap("res/1.txt");
+	loadAttacks("res/attacks.txt");
+	loadBrawlmonsters("res/brawlmons.txt");
 
 	Game::getInstance().scale();
 }
@@ -178,6 +180,71 @@ void GameLayer::loadMap(std::string name)
 	mapHeight = row;
 }
 
+void GameLayer::loadAttacks(std::string name)
+{
+	std::ifstream file(name);
+	int row = 0;
+	std::string line;
+
+	while (std::getline(file, line))
+	{
+		std::string delimiter = ";";
+		std::vector<std::string> lista;
+		size_t pos = 0;
+		std::string token;
+		Category category = Category::Physical;
+		while ((pos = line.find(delimiter)) != std::string::npos)
+		{
+			token = line.substr(0, pos);
+			lista.push_back(token);
+			line.erase(0, pos + delimiter.length());
+		}
+		switch (line.c_str()[0])
+		{
+		case 'S':
+			category = Category::Status;
+			break;
+		case 'P':
+			category = Category::Physical;
+			break;
+		}
+		attacks.insert({ lista.at(0), new Attack(lista.at(0), std::stof(lista.at(1)), category) });
+	}
+}
+
+void GameLayer::loadBrawlmonsters(std::string name)
+{
+	std::ifstream file(name);
+	int row = 0;
+	std::string line;
+
+	while (std::getline(file, line))
+	{
+		std::string delimiter = ";";
+		std::vector<std::string> lista;
+		std::unordered_set<Attack*> attacksSet;
+		size_t pos = 0;
+		std::string token;
+		while ((pos = line.find(delimiter)) != std::string::npos)
+		{
+			token = line.substr(0, pos);
+			lista.push_back(token);
+			line.erase(0, pos + delimiter.length());
+		}
+		delimiter = ",";
+		pos = 0;
+		while ((pos = line.find(delimiter)) != std::string::npos)
+		{
+			token = line.substr(0, pos);
+			attacksSet.insert(attacks.at(token));
+			line.erase(0, pos + delimiter.length());
+		}
+		attacksSet.insert(attacks.at(line));
+		brawlmons.push_back(new Brawlmonster("res/" + lista.at(0) + ".png", lista.at(1),
+			0, 0, std::stof(lista.at(2)), std::stof(lista.at(3)), attacksSet));
+	}
+}
+
 void GameLayer::loadMapObject(char character, float x, float y)
 {
 	switch (character)
@@ -197,13 +264,14 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		player = new Player(x, y);
 		player->y -= player->height;
 		player->boundingBox.update(player->x, player->y);
+		//player->addBrawlmon(new Brawlmonster();
 		space->addDynamicActor(player);
 		break;
 	}
 	case 'H':
 	case 'V':
 	{
-		Enemy* enemy = new Enemy(character == 'H' ? "res/rival1_walking.png" : "res/rival2_walking.png", 
+		Enemy* enemy = new Enemy(character == 'H' ? "res/rival1_walking.png" : "res/rival2_walking.png",
 			x, y, character == 'H' ? State::MovingHorizontal : State::MovingVertical);
 		enemy->y -= enemy->height / 2;
 		enemy->boundingBox.update(enemy->x, enemy->y);

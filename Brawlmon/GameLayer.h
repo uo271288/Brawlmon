@@ -1,6 +1,7 @@
 #pragma once
 
 #include <list>
+#include <unordered_map>
 
 #include "Layer.h"
 #include "Background.h"
@@ -10,6 +11,7 @@
 #include "Space.h"
 #include "Enemy.h"
 #include "CombatLayer.h"
+#include "Attack.h"
 
 class GameLayer : public Layer
 {
@@ -22,6 +24,8 @@ public:
 	void draw() override;
 
 	void loadMap(std::string name);
+	void loadAttacks(std::string name);
+	void loadBrawlmonsters(std::string name);
 	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
 
@@ -35,6 +39,8 @@ public:
 
 	std::list<Tile*> tiles; 
 	std::list<Enemy*> enemies;
+	std::unordered_map<std::string, Attack*> attacks;
+	std::list<Brawlmonster*> brawlmons;
 
 	bool controlShoot = false;
 	int controlMoveX = 0;

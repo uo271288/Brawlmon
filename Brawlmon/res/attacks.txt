@@ -1,0 +1,9 @@
+Roar;.1;S
+Scare;.3;S
+Smash;30;P
+Waterblast;35;P
+Snowball;35;P
+Dune;25;P
+Fireblast;40;P
+Possess;20;P
+Entangle;30;P

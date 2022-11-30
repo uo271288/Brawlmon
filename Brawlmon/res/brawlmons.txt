@@ -1,0 +1,6 @@
+devil;Devilmon;100;1;Scare,Smash,Possess
+fire;Firemon;150;1.2;Roar,Smash,Fireblast
+grass;Grassmon;90;1.5;Roar,Smash,Entangle
+ice;Icemon;165;0.5;Roar,Smash,Snowball
+sand;Sandmon;120;1;Scare,Smash,Dune
+water;Watermon;130;1.1;Roar,Smash,Waterblast

@@ -10,6 +10,6 @@ void Brawlmonster::attack(Brawlmonster* enemy, Attack* attack)
 	case Category::Physical:
 		enemy->life -= attack->damage / defense;
 	case Category::Status:
-		enemy->defense -= defense > .5 ? .5 : 0;
+		enemy->defense -= defense > attack->damage ? attack->damage : 0;
 	}
 }
