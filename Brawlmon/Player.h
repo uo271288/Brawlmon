@@ -2,6 +2,7 @@
 
 #include "Actor.h"
 #include "Animation.h"
+#include "Brawlmonster.h"
 
 class Player : public Actor
 {
@@ -27,4 +28,6 @@ public:
 
 	State state = State::Moving;
 	Orientation orientation = Orientation::Right;
+
+	std::list<Brawlmonster*> brawlmons;
 };

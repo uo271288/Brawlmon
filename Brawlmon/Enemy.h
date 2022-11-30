@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "Animation.h"
 #include "Player.h"
+#include "Brawlmonster.h"
 
 class Enemy : public Actor
 {
@@ -21,4 +22,6 @@ public:
 
 	float vxIntelligence = 0, vyIntelligence = 0;
 	bool animationEnded = false;
+
+	std::list<Brawlmonster*> brawlmons;
 };
