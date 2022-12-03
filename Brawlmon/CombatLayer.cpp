@@ -1,8 +1,8 @@
 #include "CombatLayer.h"
 #include "Game.h"
 
-CombatLayer::CombatLayer()
-	: Layer()
+CombatLayer::CombatLayer(Player* player, Enemy* enemy)
+	: Layer(), player(player), enemy(enemy)
 {
 	init();
 }
@@ -11,6 +11,8 @@ void CombatLayer::init()
 {
 	background = new Background("res/combat_background.png", 191, 302);
 	Game::getInstance().scale();
+
+	loadEnemyBrawlmon();
 }
 
 void CombatLayer::processControls()
@@ -22,14 +24,14 @@ void CombatLayer::processControls()
 
 void CombatLayer::update()
 {
-
+	
 }
 
 void CombatLayer::draw()
 {
 	background->draw();
 
-
+	playerBrawlmon->draw();
 
 	SDL_RenderPresent(Game::getRenderer());
 }
@@ -69,12 +71,15 @@ void CombatLayer::gamepadToControls(SDL_Event event)
 	Layer::gamepadToControls(event);
 }
 
-void CombatLayer::loadMap(std::string name)
+void CombatLayer::loadEnemyBrawlmon()
 {
-
+	playerBrawlmon = player->brawlmons.front();
+	playerBrawlmon->x = 100;
+	playerBrawlmon->y = 415;
+	playerBrawlmon->y -= playerBrawlmon->height / 2;
+	playerBrawlmon->boundingBox.update(playerBrawlmon->x, playerBrawlmon->y);
 }
-
-void CombatLayer::loadMapObject(char character, float x, float y)
+void CombatLayer::loadPlayerBrawlmon()
 {
 
 }

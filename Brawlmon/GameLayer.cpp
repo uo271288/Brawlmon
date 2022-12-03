@@ -18,9 +18,9 @@ void GameLayer::init()
 	tiles.clear();
 	enemies.clear();
 
-	loadMap("res/1.txt");
 	loadAttacks("res/attacks.txt");
 	loadBrawlmonsters("res/brawlmons.txt");
+	loadMap("res/1.txt");
 
 	Game::getInstance().scale();
 }
@@ -50,7 +50,7 @@ void GameLayer::update()
 		{
 			enemy->defeat();
 			player->stop();
-			Game::getInstance().layer = new CombatLayer();
+			Game::getInstance().layer = new CombatLayer(player, enemy);
 		}
 	}
 
@@ -261,7 +261,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case 'P':
 	{
-		player = new Player(x, y);
+		player = new Player(x, y, brawlmons);
 		player->y -= player->height;
 		player->boundingBox.update(player->x, player->y);
 		//player->addBrawlmon(new Brawlmonster();

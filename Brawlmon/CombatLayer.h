@@ -9,25 +9,30 @@
 #include "Player.h"
 #include "Space.h"
 #include "Enemy.h"
+#include "Brawlmonster.h"
 
 class CombatLayer :
     public Layer
 {
 public:
-	CombatLayer();
+	CombatLayer(Player* player, Enemy* enemy);
 
 	void init() override;
 	void processControls() override;
 	void update() override;
 	void draw() override;
 
-	void loadMap(std::string name);
-	void loadMapObject(char character, float x, float y);
-	void calculateScroll();
+	void loadEnemyBrawlmon();
+	void loadPlayerBrawlmon();
 
 	void keysToControls(SDL_Event event) override;
 	void mouseToControls(SDL_Event event) override;
 	void gamepadToControls(SDL_Event event) override;
 
+	Player* player;
+	Enemy* enemy;
 	Background* background;
+
+	Brawlmonster* playerBrawlmon;
+	Brawlmonster* enemyBrawlmon;
 };
