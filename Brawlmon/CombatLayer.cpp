@@ -40,7 +40,8 @@ void CombatLayer::processControls()
 
 void CombatLayer::update()
 {
-	std::unordered_set<Brawlmonster*> deleteEnemies;
+	std::unordered_set<Brawlmonster*> deleteEnemyBrawlmons;
+	std::unordered_set<Brawlmonster*> deletePlayerBrawlmons;
 
 	playerBrawlmonLifebar->update(playerBrawlmon->life / playerBrawlmon->maxlife);
 	enemyBrawlmonLifebar->update(enemyBrawlmon->life / enemyBrawlmon->maxlife);
@@ -49,20 +50,39 @@ void CombatLayer::update()
 	enemyBrawlmon->update();
 	playerBrawlmon->update();
 
-	if (playerBrawlmon->life <= 0)
+	for (auto const& pb : player->brawlmons)
 	{
-
+		if (pb->state != State::Alive)
+		{
+			deletePlayerBrawlmons.emplace(pb);
+		}
 	}
 
 	for (auto const& eb : enemy->brawlmons)
 	{
 		if (eb->state != State::Alive)
 		{
-			deleteEnemies.emplace(eb);
+			deleteEnemyBrawlmons.emplace(eb);
 		}
 	}
 
-	for (auto const& delEnemy : deleteEnemies)
+	for (auto const& delPlayer : deletePlayerBrawlmons)
+	{
+		player->brawlmons.remove(delPlayer);
+		if (player->brawlmons.size() == 0)
+		{
+			Game::getInstance().layer = new GameLayer();
+		}
+		else
+		{
+			loadPlayerBrawlmon();
+			menu = new Menu(playerBrawlmon->attacks);
+			playerBrawlmonInfo->content = playerBrawlmon->name;
+		}
+	}
+	deletePlayerBrawlmons.clear();
+
+	for (auto const& delEnemy : deleteEnemyBrawlmons)
 	{
 		enemy->brawlmons.remove(delEnemy);
 		if (enemy->brawlmons.size() == 0)
@@ -77,7 +97,7 @@ void CombatLayer::update()
 			enemyBrawlmonInfo->content = enemyBrawlmon->name;
 		}
 	}
-	deleteEnemies.clear();
+	deleteEnemyBrawlmons.clear();
 }
 
 void CombatLayer::draw()
@@ -105,28 +125,39 @@ void CombatLayer::draw()
 void CombatLayer::keysToControls(SDL_Event event)
 {
 	Layer::keysToControls(event);
-
 	if (event.type == SDL_KEYDOWN)
 	{
 		int code = event.key.keysym.sym;
-		// Pulsada
 		switch (code)
 		{
-		case SDLK_w: // derecha
+		case SDLK_w:
 			menu->select(0);
 			break;
-		case SDLK_e: // izquierda
+		case SDLK_e:
 			menu->select(1);
 			break;
-		case SDLK_s: // arriba
+		case SDLK_s:
 			menu->select(2);
 			break;
-		case SDLK_d: // abajo
+		case SDLK_d:
 			menu->select(3);
 			break;
-		case SDLK_t: // abajo
-			playerBrawlmon->attack(enemyBrawlmon, menu->selectedAttack);
-			combatInfo->content = playerBrawlmon->name + " used " + menu->selectedAttack->name + "!";
+		case SDLK_t:
+			if (yourTurn)
+			{
+				playerBrawlmon->attack(enemyBrawlmon, menu->selectedAttack);
+				combatInfo->content = playerBrawlmon->name + " used " + menu->selectedAttack->name + "!";
+				yourTurn = !yourTurn;
+			}
+			break;
+		case SDLK_y:
+			if (!yourTurn)
+			{
+				int random = rand() % 4;
+				enemyBrawlmon->attack(playerBrawlmon, enemyBrawlmon->attacks.at(random));
+				combatInfo->content = enemyBrawlmon->name + " enemy used " + enemyBrawlmon->attacks.at(random)->name + "!";
+				yourTurn = !yourTurn;
+			}
 			break;
 		}
 	}

@@ -50,4 +50,6 @@ public:
 	Lifebar* playerBrawlmonLifebar;
 
 	Menu* menu;
+
+	bool yourTurn = true;
 };
