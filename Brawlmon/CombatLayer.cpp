@@ -33,7 +33,7 @@ void CombatLayer::processControls()
 
 void CombatLayer::update()
 {
-	playerBrawlmonLifebar->update(playerBrawlmon->life-- / playerBrawlmon->maxlife);
+	playerBrawlmonLifebar->update(playerBrawlmon->life / playerBrawlmon->maxlife);
 	enemyBrawlmonLifebar->update(enemyBrawlmon->life / enemyBrawlmon->maxlife);
 }
 
@@ -66,6 +66,9 @@ void CombatLayer::keysToControls(SDL_Event event)
 		{
 		case SDLK_n: // derecha
 			playerBrawlmon->attack(enemyBrawlmon, playerBrawlmon->attacks.at(2));
+			break;
+		case SDLK_m: // derecha
+			playerBrawlmon->attack(enemyBrawlmon, playerBrawlmon->attacks.at(0));
 			break;
 		case SDLK_TAB:
 			Game::getInstance().layer = new PauseLayer(this);

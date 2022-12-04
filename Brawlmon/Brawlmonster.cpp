@@ -11,8 +11,8 @@ void Brawlmonster::attack(Brawlmonster* enemy, Attack* attack)
 	switch (attack->category)
 	{
 	case Category::Physical:
-		enemy->life -= attack->damage / defense;
+		enemy->life -= attack->damage / enemy->defense;
 	case Category::Status:
-		enemy->defense -= defense > attack->damage ? attack->damage : 0;
+		enemy->defense -= enemy->defense > attack->damage ? attack->damage : 0;
 	}
 }
