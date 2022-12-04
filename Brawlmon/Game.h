@@ -3,7 +3,6 @@
 #include <iostream>
 #include <unordered_map>
 #include <SDL.h>
-#include <SDL_ttf.h>
 #include <SDL_image.h>
 
 #include "Layer.h"
@@ -26,11 +25,6 @@ public:
 	static SDL_Renderer* getRenderer() 
 	{
 		return getInstance().renderer;
-	}
-
-	static TTF_Font* getFont() 
-	{
-		return getInstance().font;
 	}
 
 	static SDL_Texture* getTexture(std::string filename) 
@@ -62,5 +56,4 @@ public:
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;
-	TTF_Font* font;
 };

@@ -12,6 +12,14 @@ void CombatLayer::init()
 	background = new Background("res/combat_background.png", 191, 302);
 	Game::getInstance().scale();
 
+	combatInfo = new Text(15, "DEVIL ha usado placaje.", WIDTH * .05f, HEIGHT * .95f);
+
+	enemyBrawlmonInfo = new Text(15, "DEVIL", WIDTH * .09f, HEIGHT * .19f);
+	playerBrawlmonInfo = new Text(15, "DEVIL", WIDTH * .6f, HEIGHT * .63f);
+
+	enemyBrawlmonLifebar = new Lifebar(WIDTH * .41f, HEIGHT * .25f, -100, 13, SDL_Color{ 0 ,150,0,255 }, SDL_Color{ 100,100,100,255 });
+	playerBrawlmonLifebar = new Lifebar(WIDTH * .92f, HEIGHT * .7f, -100, 13, SDL_Color{ 0 ,150,0,255 }, SDL_Color{ 100,100,100,255 });
+
 	loadEnemyBrawlmon();
 }
 
@@ -24,7 +32,7 @@ void CombatLayer::processControls()
 
 void CombatLayer::update()
 {
-	
+
 }
 
 void CombatLayer::draw()
@@ -32,6 +40,13 @@ void CombatLayer::draw()
 	background->draw();
 
 	playerBrawlmon->draw();
+
+	combatInfo->draw();
+	enemyBrawlmonInfo->draw();
+	playerBrawlmonInfo->draw();
+
+	playerBrawlmonLifebar->draw();
+	enemyBrawlmonLifebar->draw();
 
 	SDL_RenderPresent(Game::getRenderer());
 }

@@ -10,6 +10,8 @@
 #include "Space.h"
 #include "Enemy.h"
 #include "Brawlmonster.h"
+#include "Text.h"
+#include "Lifebar.h"
 
 class CombatLayer :
     public Layer
@@ -35,4 +37,11 @@ public:
 
 	Brawlmonster* playerBrawlmon;
 	Brawlmonster* enemyBrawlmon;
+
+	Text* combatInfo;
+	Text* enemyBrawlmonInfo;
+	Text* playerBrawlmonInfo;
+
+	Lifebar* enemyBrawlmonLifebar;
+	Lifebar* playerBrawlmonLifebar;
 };

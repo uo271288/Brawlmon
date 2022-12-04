@@ -15,7 +15,6 @@ Game::Game() {
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
 	TTF_Init();
-	font = TTF_OpenFont("res/brawlmon_main_font.ttf", 24);
 }
 
 void Game::loop() {
@@ -53,7 +52,6 @@ void Game::scale() {
 		SDL_SetWindowSize(window, scaleX, scaleY);
 		// Cambiar escala del render
 		SDL_RenderSetScale(renderer, 1.8, .8);
-		SDL_SetWindowPosition(window, 200, 150);
 	}
 	else { // Escala Original
 		scaleLower = 1;
