@@ -222,7 +222,7 @@ void GameLayer::loadBrawlmonsters(std::string name)
 	{
 		std::string delimiter = ";";
 		std::vector<std::string> lista;
-		std::unordered_set<Attack*> attacksSet;
+		std::vector<Attack*> attacksList;
 		size_t pos = 0;
 		std::string token;
 		while ((pos = line.find(delimiter)) != std::string::npos)
@@ -236,12 +236,12 @@ void GameLayer::loadBrawlmonsters(std::string name)
 		while ((pos = line.find(delimiter)) != std::string::npos)
 		{
 			token = line.substr(0, pos);
-			attacksSet.insert(attacks.at(token));
+			attacksList.push_back(attacks.at(token));
 			line.erase(0, pos + delimiter.length());
 		}
-		attacksSet.insert(attacks.at(line));
+		attacksList.push_back(attacks.at(line));
 		brawlmons.push_back(new Brawlmonster("res/" + lista.at(0) + ".png", lista.at(1),
-			0, 0, std::stof(lista.at(2)), std::stof(lista.at(3)), attacksSet));
+			0, 0, std::stof(lista.at(2)), std::stof(lista.at(3)), attacksList));
 	}
 }
 
@@ -272,7 +272,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	case 'V':
 	{
 		Enemy* enemy = new Enemy(character == 'H' ? "res/rival1_walking.png" : "res/rival2_walking.png",
-			x, y, character == 'H' ? State::MovingHorizontal : State::MovingVertical);
+			x, y, character == 'H' ? State::MovingHorizontal : State::MovingVertical, brawlmons);
 		enemy->y -= enemy->height / 2;
 		enemy->boundingBox.update(enemy->x, enemy->y);
 		enemies.emplace_back(enemy);

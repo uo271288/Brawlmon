@@ -21,6 +21,7 @@ void CombatLayer::init()
 	playerBrawlmonLifebar = new Lifebar(WIDTH * .92f, HEIGHT * .7f, -100, 13, SDL_Color{ 0 ,150,0,255 }, SDL_Color{ 100,100,100,255 });
 
 	loadEnemyBrawlmon();
+	loadPlayerBrawlmon();
 }
 
 void CombatLayer::processControls()
@@ -32,7 +33,8 @@ void CombatLayer::processControls()
 
 void CombatLayer::update()
 {
-
+	playerBrawlmonLifebar->update(playerBrawlmon->life-- / playerBrawlmon->maxlife);
+	enemyBrawlmonLifebar->update(enemyBrawlmon->life / enemyBrawlmon->maxlife);
 }
 
 void CombatLayer::draw()
@@ -40,6 +42,7 @@ void CombatLayer::draw()
 	background->draw();
 
 	playerBrawlmon->draw();
+	enemyBrawlmon->draw();
 
 	combatInfo->draw();
 	enemyBrawlmonInfo->draw();
@@ -61,17 +64,12 @@ void CombatLayer::keysToControls(SDL_Event event)
 		// Pulsada
 		switch (code)
 		{
-
-		}
-	}
-
-	if (event.type == SDL_KEYUP)
-	{
-		int code = event.key.keysym.sym;
-		// Levantada
-		switch (code)
-		{
-
+		case SDLK_n: // derecha
+			playerBrawlmon->attack(enemyBrawlmon, playerBrawlmon->attacks.at(2));
+			break;
+		case SDLK_TAB:
+			Game::getInstance().layer = new PauseLayer(this);
+			break;
 		}
 	}
 }
@@ -88,13 +86,17 @@ void CombatLayer::gamepadToControls(SDL_Event event)
 
 void CombatLayer::loadEnemyBrawlmon()
 {
+	enemyBrawlmon = enemy->brawlmons.back();
+	enemyBrawlmon->x = 200;
+	enemyBrawlmon->y = 100;
+	enemyBrawlmon->y -= enemyBrawlmon->height / 2;
+	enemyBrawlmon->boundingBox.update(enemyBrawlmon->x, enemyBrawlmon->y);
+}
+void CombatLayer::loadPlayerBrawlmon()
+{
 	playerBrawlmon = player->brawlmons.front();
 	playerBrawlmon->x = 100;
 	playerBrawlmon->y = 415;
 	playerBrawlmon->y -= playerBrawlmon->height / 2;
 	playerBrawlmon->boundingBox.update(playerBrawlmon->x, playerBrawlmon->y);
-}
-void CombatLayer::loadPlayerBrawlmon()
-{
-
 }
