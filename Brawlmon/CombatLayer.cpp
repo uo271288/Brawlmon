@@ -17,7 +17,7 @@ void CombatLayer::init()
 	loadEnemyBrawlmon();
 	loadPlayerBrawlmon();
 
-	combatInfo = new Text(15, "DEVIL ha usado placaje.", WIDTH * .05f, HEIGHT * .95f);
+	combatInfo = new Text(12, "WATERMON used Waterblast.", WIDTH * .05f, HEIGHT * .95f);
 
 	enemyBrawlmonInfo = new Text(15, enemyBrawlmon->name, WIDTH * .09f, HEIGHT * .19f);
 	playerBrawlmonInfo = new Text(15, playerBrawlmon->name, WIDTH * .6f, HEIGHT * .63f);
@@ -27,6 +27,8 @@ void CombatLayer::init()
 
 	enemyBrawlmonLifebar = new Lifebar(WIDTH * .41f, HEIGHT * .25f, -100, 13, SDL_Color{ 0 ,150,0,255 }, SDL_Color{ 100,100,100,255 });
 	playerBrawlmonLifebar = new Lifebar(WIDTH * .92f, HEIGHT * .7f, -100, 13, SDL_Color{ 0 ,150,0,255 }, SDL_Color{ 100,100,100,255 });
+
+	menu = new Menu();
 }
 
 void CombatLayer::processControls()
@@ -93,6 +95,8 @@ void CombatLayer::draw()
 
 	playerBrawlmonLife->draw();
 	playerBrawlmonMaxLife->draw();
+
+	menu->draw();
 
 	SDL_RenderPresent(Game::getRenderer());
 }

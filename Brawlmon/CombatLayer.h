@@ -12,6 +12,7 @@
 #include "Brawlmonster.h"
 #include "Text.h"
 #include "Lifebar.h"
+#include "Menu.h"
 
 class CombatLayer :
     public Layer
@@ -47,4 +48,6 @@ public:
 
 	Lifebar* enemyBrawlmonLifebar;
 	Lifebar* playerBrawlmonLifebar;
+
+	Menu* menu;
 };
