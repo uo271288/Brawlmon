@@ -36,7 +36,6 @@ void GameLayer::processControls()
 
 void GameLayer::update()
 {
-	std::unordered_set<Enemy*> deleteEnemies;
 
 	space->update();
 	player->update();
@@ -52,16 +51,13 @@ void GameLayer::update()
 			Game::getInstance().prevLayer = this;
 			Game::getInstance().layer = new CombatLayer(player, enemy);
 		}
+
+		if(enemy->state==State::Defeated)
+		{
+			space->removeDynamicActor(enemy);
+			space->addStaticActor(enemy);
+		}
 	}
-
-
-	for (auto const& delEnemy : deleteEnemies)
-	{
-		enemies.remove(delEnemy);
-		space->removeDynamicActor(delEnemy);
-	}
-	deleteEnemies.clear();
-
 }
 
 void GameLayer::draw()
