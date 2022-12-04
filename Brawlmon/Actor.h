@@ -12,7 +12,7 @@ enum class Orientation
 
 enum class State 
 {
-	Moving, MovingHorizontal, MovingVertical, Dying, Dead, Defeated
+	Moving, MovingHorizontal, MovingVertical, Alive, Dying, Dead, Defeated
 };
 
 class Actor

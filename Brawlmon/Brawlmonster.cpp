@@ -16,3 +16,11 @@ void Brawlmonster::attack(Brawlmonster* enemy, Attack* attack)
 		enemy->defense -= enemy->defense > attack->damage ? attack->damage : 0;
 	}
 }
+
+void Brawlmonster::update()
+{
+	if (life <= 0)
+	{
+		state = State::Dead;
+	}
+}

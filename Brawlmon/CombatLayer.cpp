@@ -1,6 +1,8 @@
 #include "CombatLayer.h"
 #include "Game.h"
 
+#include <unordered_set>
+
 CombatLayer::CombatLayer(Player* player, Enemy* enemy)
 	: Layer(), player(player), enemy(enemy)
 {
@@ -36,20 +38,43 @@ void CombatLayer::processControls()
 
 void CombatLayer::update()
 {
+	std::unordered_set<Brawlmonster*> deleteEnemies;
+
 	playerBrawlmonLifebar->update(playerBrawlmon->life / playerBrawlmon->maxlife);
 	enemyBrawlmonLifebar->update(enemyBrawlmon->life / enemyBrawlmon->maxlife);
 	playerBrawlmonLife->content = std::to_string((int)playerBrawlmon->life);
-	
-	if (playerBrawlmon->life <= 0) 
+
+	enemyBrawlmon->update();
+	playerBrawlmon->update();
+
+	if (playerBrawlmon->life <= 0)
 	{
 
 	}
-	if (enemyBrawlmon->life <= 0) 
+
+	for (auto const& eb : enemy->brawlmons)
 	{
-		enemy->defeat();
-		Game::getInstance().scale();
-		Game::getInstance().layer = Game::getInstance().prevLayer;
+		if (eb->state != State::Alive)
+		{
+			deleteEnemies.emplace(eb);
+		}
 	}
+
+	for (auto const& delEnemy : deleteEnemies)
+	{
+		enemy->brawlmons.remove(delEnemy);
+		if (enemy->brawlmons.size() == 0)
+		{
+			enemy->defeat();
+			Game::getInstance().scale();
+			Game::getInstance().layer = Game::getInstance().prevLayer;
+		}
+		else
+		{
+			loadEnemyBrawlmon();
+		}
+	}
+	deleteEnemies.clear();
 }
 
 void CombatLayer::draw()

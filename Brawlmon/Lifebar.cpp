@@ -10,7 +10,7 @@ Lifebar::Lifebar(int x, int y, int width, int height, SDL_Color fGColor, SDL_Col
 void Lifebar::update(float percent)
 {
 	this->percent = percent;
-	fGColor = percent > .5 ? fGColor : SDL_Color{ 255,150,0,255 };
+	fGColor = percent > .5 ? SDL_Color{ 0 ,150,0,255 } : SDL_Color{ 255,150,0,255 };
 	fGColor = percent > .25 ? fGColor : SDL_Color{ 255,0,0,255 };
 }
 
