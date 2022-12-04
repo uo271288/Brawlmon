@@ -13,8 +13,6 @@ Text::Text(int size, std::string content, float x, float y)
 
 void Text::draw()
 {
-	SDL_Color color{ 0,0,0,255 };
-
 	SDL_Surface* surface = TTF_RenderText_Blended(font, content.c_str(), color);
 
 	SDL_Texture* texture = SDL_CreateTextureFromSurface(Game::getRenderer(), surface);

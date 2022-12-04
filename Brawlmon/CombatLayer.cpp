@@ -17,7 +17,7 @@ void CombatLayer::init()
 	loadEnemyBrawlmon();
 	loadPlayerBrawlmon();
 
-	combatInfo = new Text(12, "WATERMON used Waterblast.", WIDTH * .05f, HEIGHT * .95f);
+	combatInfo = new Text(12, "Select an attack!", WIDTH * .05f, HEIGHT * .95f);
 
 	enemyBrawlmonInfo = new Text(15, enemyBrawlmon->name, WIDTH * .09f, HEIGHT * .19f);
 	playerBrawlmonInfo = new Text(15, playerBrawlmon->name, WIDTH * .6f, HEIGHT * .63f);
@@ -28,7 +28,7 @@ void CombatLayer::init()
 	enemyBrawlmonLifebar = new Lifebar(WIDTH * .41f, HEIGHT * .25f, -100, 13, SDL_Color{ 0 ,150,0,255 }, SDL_Color{ 100,100,100,255 });
 	playerBrawlmonLifebar = new Lifebar(WIDTH * .92f, HEIGHT * .7f, -100, 13, SDL_Color{ 0 ,150,0,255 }, SDL_Color{ 100,100,100,255 });
 
-	menu = new Menu();
+	menu = new Menu(playerBrawlmon->attacks);
 }
 
 void CombatLayer::processControls()
@@ -74,6 +74,7 @@ void CombatLayer::update()
 		else
 		{
 			loadEnemyBrawlmon();
+			enemyBrawlmonInfo->content = enemyBrawlmon->name;
 		}
 	}
 	deleteEnemies.clear();
@@ -111,14 +112,21 @@ void CombatLayer::keysToControls(SDL_Event event)
 		// Pulsada
 		switch (code)
 		{
-		case SDLK_n: // derecha
-			playerBrawlmon->attack(enemyBrawlmon, playerBrawlmon->attacks.at(2));
+		case SDLK_w: // derecha
+			menu->select(0);
 			break;
-		case SDLK_m: // derecha
-			playerBrawlmon->attack(enemyBrawlmon, playerBrawlmon->attacks.at(0));
+		case SDLK_e: // izquierda
+			menu->select(1);
 			break;
-		case SDLK_TAB:
-			Game::getInstance().layer = new PauseLayer(this);
+		case SDLK_s: // arriba
+			menu->select(2);
+			break;
+		case SDLK_d: // abajo
+			menu->select(3);
+			break;
+		case SDLK_t: // abajo
+			playerBrawlmon->attack(enemyBrawlmon, menu->selectedAttack);
+			combatInfo->content = playerBrawlmon->name + " used " + menu->selectedAttack->name + "!";
 			break;
 		}
 	}

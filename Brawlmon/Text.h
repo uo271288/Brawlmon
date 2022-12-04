@@ -12,6 +12,7 @@ public:
 	int width, height;
 	std::string content;
 	TTF_Font* font;
+	SDL_Color color = { 0,0,0,255 };
 
 	void draw();
 };
