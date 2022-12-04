@@ -12,16 +12,19 @@ void CombatLayer::init()
 	background = new Background("res/combat_background.png", 191, 302);
 	Game::getInstance().scale();
 
+	loadEnemyBrawlmon();
+	loadPlayerBrawlmon();
+
 	combatInfo = new Text(15, "DEVIL ha usado placaje.", WIDTH * .05f, HEIGHT * .95f);
 
-	enemyBrawlmonInfo = new Text(15, "DEVIL", WIDTH * .09f, HEIGHT * .19f);
-	playerBrawlmonInfo = new Text(15, "DEVIL", WIDTH * .6f, HEIGHT * .63f);
+	enemyBrawlmonInfo = new Text(15, enemyBrawlmon->name, WIDTH * .09f, HEIGHT * .19f);
+	playerBrawlmonInfo = new Text(15, playerBrawlmon->name, WIDTH * .6f, HEIGHT * .63f);
+
+	playerBrawlmonLife = new Text(12, std::to_string((int)playerBrawlmon->life), WIDTH * .8f, HEIGHT * .77f);
+	playerBrawlmonMaxLife = new Text(12, "/" + std::to_string((int)playerBrawlmon->maxlife), WIDTH * .85f, HEIGHT * .77f);
 
 	enemyBrawlmonLifebar = new Lifebar(WIDTH * .41f, HEIGHT * .25f, -100, 13, SDL_Color{ 0 ,150,0,255 }, SDL_Color{ 100,100,100,255 });
 	playerBrawlmonLifebar = new Lifebar(WIDTH * .92f, HEIGHT * .7f, -100, 13, SDL_Color{ 0 ,150,0,255 }, SDL_Color{ 100,100,100,255 });
-
-	loadEnemyBrawlmon();
-	loadPlayerBrawlmon();
 }
 
 void CombatLayer::processControls()
@@ -35,6 +38,18 @@ void CombatLayer::update()
 {
 	playerBrawlmonLifebar->update(playerBrawlmon->life / playerBrawlmon->maxlife);
 	enemyBrawlmonLifebar->update(enemyBrawlmon->life / enemyBrawlmon->maxlife);
+	playerBrawlmonLife->content = std::to_string((int)playerBrawlmon->life);
+	
+	if (playerBrawlmon->life <= 0) 
+	{
+
+	}
+	if (enemyBrawlmon->life <= 0) 
+	{
+		enemy->defeat();
+		Game::getInstance().scale();
+		Game::getInstance().layer = Game::getInstance().prevLayer;
+	}
 }
 
 void CombatLayer::draw()
@@ -50,6 +65,9 @@ void CombatLayer::draw()
 
 	playerBrawlmonLifebar->draw();
 	enemyBrawlmonLifebar->draw();
+
+	playerBrawlmonLife->draw();
+	playerBrawlmonMaxLife->draw();
 
 	SDL_RenderPresent(Game::getRenderer());
 }
@@ -90,8 +108,8 @@ void CombatLayer::gamepadToControls(SDL_Event event)
 void CombatLayer::loadEnemyBrawlmon()
 {
 	enemyBrawlmon = enemy->brawlmons.back();
-	enemyBrawlmon->x = 200;
-	enemyBrawlmon->y = 100;
+	enemyBrawlmon->x = 280;
+	enemyBrawlmon->y = 250;
 	enemyBrawlmon->y -= enemyBrawlmon->height / 2;
 	enemyBrawlmon->boundingBox.update(enemyBrawlmon->x, enemyBrawlmon->y);
 }

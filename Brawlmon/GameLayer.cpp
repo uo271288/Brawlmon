@@ -18,9 +18,9 @@ void GameLayer::init()
 	tiles.clear();
 	enemies.clear();
 
+	loadMap("res/1.txt");
 	loadAttacks("res/attacks.txt");
 	loadBrawlmonsters("res/brawlmons.txt");
-	loadMap("res/1.txt");
 
 	Game::getInstance().scale();
 }
@@ -46,10 +46,10 @@ void GameLayer::update()
 	for (auto const& enemy : enemies)
 	{
 		enemy->update();
-		if (player->hit(enemy))
+		if (player->hit(enemy) && enemy->state != State::Defeated)
 		{
-			enemy->defeat();
 			player->stop();
+			Game::getInstance().prevLayer = this;
 			Game::getInstance().layer = new CombatLayer(player, enemy);
 		}
 	}
@@ -240,8 +240,13 @@ void GameLayer::loadBrawlmonsters(std::string name)
 			line.erase(0, pos + delimiter.length());
 		}
 		attacksList.push_back(attacks.at(line));
-		brawlmons.push_back(new Brawlmonster("res/" + lista.at(0) + ".png", lista.at(1),
+		player->brawlmons.push_back(new Brawlmonster("res/" + lista.at(0) + ".png", lista.at(1),
 			0, 0, std::stof(lista.at(2)), std::stof(lista.at(3)), attacksList));
+		for (auto const& enemy : enemies)
+		{
+			enemy->brawlmons.push_back(new Brawlmonster("res/" + lista.at(0) + ".png", lista.at(1),
+				0, 0, std::stof(lista.at(2)), std::stof(lista.at(3)), attacksList));
+		}
 	}
 }
 
@@ -261,7 +266,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	}
 	case 'P':
 	{
-		player = new Player(x, y, brawlmons);
+		player = new Player(x, y);
 		player->y -= player->height;
 		player->boundingBox.update(player->x, player->y);
 		//player->addBrawlmon(new Brawlmonster();
@@ -272,7 +277,7 @@ void GameLayer::loadMapObject(char character, float x, float y)
 	case 'V':
 	{
 		Enemy* enemy = new Enemy(character == 'H' ? "res/rival1_walking.png" : "res/rival2_walking.png",
-			x, y, character == 'H' ? State::MovingHorizontal : State::MovingVertical, brawlmons);
+			x, y, character == 'H' ? State::MovingHorizontal : State::MovingVertical);
 		enemy->y -= enemy->height / 2;
 		enemy->boundingBox.update(enemy->x, enemy->y);
 		enemies.emplace_back(enemy);

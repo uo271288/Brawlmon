@@ -53,6 +53,7 @@ public:
 
 	bool loopActive = true;
 	Layer* layer;
+	Layer* prevLayer;
 
 	SDL_Window* window;
 	SDL_Renderer* renderer;

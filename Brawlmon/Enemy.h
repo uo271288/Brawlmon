@@ -7,7 +7,7 @@
 class Enemy : public Actor
 {
 public:
-	Enemy(std::string filename, float x, float y, State state, std::list<Brawlmonster*> brawlmons);
+	Enemy(std::string filename, float x, float y, State state);
 	void update();
 	void draw(float scrollX, float scrollY) override;
 	void defeat();

@@ -40,7 +40,6 @@ public:
 	std::list<Tile*> tiles; 
 	std::list<Enemy*> enemies;
 	std::unordered_map<std::string, Attack*> attacks;
-	std::list<Brawlmonster*> brawlmons;
 
 	bool controlShoot = false;
 	int controlMoveX = 0;

@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player(float x, float y, std::list<Brawlmonster*> brawlmons) :Actor("res/jugador.png", x, y, 50, 58), brawlmons(brawlmons)
+Player::Player(float x, float y) :Actor("res/jugador.png", x, y, 50, 58)
 {
 
 	aIdleRight = new Animation("res/player_idle.png", width, height, 192, 256, 14, 2, 3, 4);

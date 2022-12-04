@@ -42,6 +42,9 @@ public:
 	Text* enemyBrawlmonInfo;
 	Text* playerBrawlmonInfo;
 
+	Text* playerBrawlmonLife;
+	Text* playerBrawlmonMaxLife;
+
 	Lifebar* enemyBrawlmonLifebar;
 	Lifebar* playerBrawlmonLifebar;
 };

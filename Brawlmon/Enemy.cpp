@@ -1,7 +1,7 @@
 #include "Enemy.h"
 
-Enemy::Enemy(std::string filename, float x, float y, State state, std::list<Brawlmonster*> brawlmons) 
-	:Actor(filename, x, y, 50, 58), state(state), brawlmons(brawlmons) {
+Enemy::Enemy(std::string filename, float x, float y, State state) 
+	:Actor(filename, x, y, 50, 58), state(state) {
 
 	aWalkingRight = new Animation(filename, width, height, 256, 256, 6, 2, 4, 4);
 	aWalkingLeft = new Animation(filename, width, height, 256, 256, 6, 1, 4, 4);

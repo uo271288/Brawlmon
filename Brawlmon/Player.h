@@ -7,7 +7,7 @@
 class Player : public Actor
 {
 public:
-	Player(float x, float y, std::list<Brawlmonster*> brawlmons);
+	Player(float x, float y);
 
 	void update();
 	void draw(float scrollX, float scrollY) override;
