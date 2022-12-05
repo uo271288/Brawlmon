@@ -4,7 +4,6 @@
 
 #include "Layer.h"
 #include "Background.h"
-#include "PauseLayer.h"
 #include "Tile.h"
 #include "Player.h"
 #include "Space.h"

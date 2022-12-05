@@ -89,6 +89,7 @@ void CombatLayer::update()
 		if (enemy->brawlmons.size() == 0)
 		{
 			enemy->defeat();
+			player->stop();
 			Game::getInstance().scale();
 			Game::getInstance().layer = Game::getInstance().prevLayer;
 		}

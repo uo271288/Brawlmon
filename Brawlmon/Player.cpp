@@ -92,6 +92,6 @@ bool Player::hit(Actor* enemy)
 
 void Player::stop()
 {
-	x -= vx * 2;
-	y -= vy * 2;
+	vx = 0;
+	vy = 0;
 }

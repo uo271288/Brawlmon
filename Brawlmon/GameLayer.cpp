@@ -50,7 +50,8 @@ void GameLayer::update()
 		enemy->update();
 		if (player->hit(enemy) && enemy->state != State::Defeated)
 		{
-			player->stop();
+			controlMoveX = 0;
+			controlMoveY = 0;
 			Game::getInstance().prevLayer = this;
 			Game::getInstance().layer = new CombatLayer(player, enemy);
 		}
@@ -104,9 +105,6 @@ void GameLayer::keysToControls(SDL_Event event)
 			break;
 		case SDLK_s: // abajo
 			controlMoveY = 1;
-			break;
-		case SDLK_TAB:
-			Game::getInstance().layer = new PauseLayer(this);
 			break;
 		}
 	}
