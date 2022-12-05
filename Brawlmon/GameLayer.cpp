@@ -20,7 +20,9 @@ void GameLayer::init()
 
 	loadMap("res/1.txt");
 	loadAttacks("res/attacks.txt");
-	loadBrawlmonsters("res/brawlmons.txt");
+	player->brawlmons = loadBrawlmonsters("res/playerBrawlmons.txt");
+	loadEnemyBrawlmonsters();
+	leader->brawlmons = loadBrawlmonsters("res/leaderBrawlmons.txt");
 
 	Game::getInstance().scale();
 }
@@ -42,6 +44,7 @@ void GameLayer::update()
 
 	calculateScroll();
 
+	leader->update();
 	for (auto const& enemy : enemies)
 	{
 		enemy->update();
@@ -52,7 +55,7 @@ void GameLayer::update()
 			Game::getInstance().layer = new CombatLayer(player, enemy);
 		}
 
-		if(enemy->state==State::Defeated)
+		if (enemy->state == State::Defeated)
 		{
 			space->removeDynamicActor(enemy);
 			space->addStaticActor(enemy);
@@ -75,6 +78,7 @@ void GameLayer::draw()
 	}
 
 	player->draw(scrollX, scrollY);
+	leader->draw(0,0);
 
 	SDL_RenderPresent(Game::getRenderer());
 }
@@ -157,7 +161,7 @@ void GameLayer::gamepadToControls(SDL_Event event)
 void GameLayer::loadMap(std::string name)
 {
 	std::ifstream file(name);
-	int row = 0;
+	int row = -1;
 	std::string line;
 
 	while (std::getline(file, line))
@@ -208,11 +212,12 @@ void GameLayer::loadAttacks(std::string name)
 	}
 }
 
-void GameLayer::loadBrawlmonsters(std::string name)
+std::list<Brawlmonster*> GameLayer::loadBrawlmonsters(std::string name)
 {
 	std::ifstream file(name);
 	int row = 0;
 	std::string line;
+	std::list<Brawlmonster*> brawlmons;
 
 	while (std::getline(file, line))
 	{
@@ -221,6 +226,7 @@ void GameLayer::loadBrawlmonsters(std::string name)
 		std::vector<Attack*> attacksList;
 		size_t pos = 0;
 		std::string token;
+
 		while ((pos = line.find(delimiter)) != std::string::npos)
 		{
 			token = line.substr(0, pos);
@@ -236,13 +242,18 @@ void GameLayer::loadBrawlmonsters(std::string name)
 			line.erase(0, pos + delimiter.length());
 		}
 		attacksList.push_back(attacks.at(line));
-		player->brawlmons.push_back(new Brawlmonster("res/" + lista.at(0) + ".png", lista.at(1),
+		brawlmons.push_back(new Brawlmonster("res/" + lista.at(0) + ".png", lista.at(1),
 			0, 0, std::stof(lista.at(2)), std::stof(lista.at(3)), attacksList));
-		for (auto const& enemy : enemies)
-		{
-			enemy->brawlmons.push_back(new Brawlmonster("res/" + lista.at(0) + ".png", lista.at(1),
-				0, 0, std::stof(lista.at(2)), std::stof(lista.at(3)), attacksList));
-		}
+	}
+
+	return brawlmons;
+}
+
+void GameLayer::loadEnemyBrawlmonsters()
+{
+	for (auto const& enemy : enemies)
+	{
+		enemy->brawlmons = loadBrawlmonsters("res/enemyBrawlmons.txt");
 	}
 }
 
@@ -265,7 +276,6 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		player = new Player(x, y);
 		player->y -= player->height;
 		player->boundingBox.update(player->x, player->y);
-		//player->addBrawlmon(new Brawlmonster();
 		space->addDynamicActor(player);
 		break;
 	}
@@ -280,22 +290,31 @@ void GameLayer::loadMapObject(char character, float x, float y)
 		space->addDynamicActor(enemy);
 		break;
 	}
+	case 'L':
+	{
+		leader = new Enemy("res/leader.png", x, y, State::Stay);
+		leader->y -= leader->height / 2;
+		leader->boundingBox.update(leader->x, leader->y);
+		enemies.emplace_back(leader);
+		space->addDynamicActor(leader);
+		break;
+	}
 	}
 }
 
 void GameLayer::calculateScroll()
 {
-	if (player->y > HEIGHT * .1f
-		|| player->y < HEIGHT * .9f)
+	if (player->y > HEIGHT * .2f
+		|| player->y < HEIGHT * .8f)
 	{
 
-		if (player->y - scrollY < HEIGHT * .1f)
+		if (player->y - scrollY < HEIGHT * .2f)
 		{
-			scrollY = player->y - HEIGHT * .1f;
+			scrollY = player->y - HEIGHT * .2f;
 		}
-		if (player->y - scrollY > HEIGHT * .9f)
+		if (player->y - scrollY > HEIGHT * .8f)
 		{
-			scrollY = player->y - HEIGHT * .9f;
+			scrollY = player->y - HEIGHT * .8f;
 		}
 	}
 }

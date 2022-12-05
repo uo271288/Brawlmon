@@ -1,0 +1,3 @@
+devil;DEVILMON;100;1;Scare,Smash,Roar,Possess
+grass;GRASSMON;90;1.5;Roar,Smash,Scare,Entangle
+ice;ICEMON;165;0.5;Roar,Smash,Scare,Snowball

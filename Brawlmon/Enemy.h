@@ -16,6 +16,7 @@ public:
 	Animation* aWalkingLeft;
 	Animation* aWalkingUp;
 	Animation* aWalkingDown;
+	Animation* idle;
 	Animation* animation;
 
 	State state = State::Moving;

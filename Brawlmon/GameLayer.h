@@ -25,7 +25,8 @@ public:
 
 	void loadMap(std::string name);
 	void loadAttacks(std::string name);
-	void loadBrawlmonsters(std::string name);
+	std::list<Brawlmonster*> loadBrawlmonsters(std::string name);
+	void loadEnemyBrawlmonsters();
 	void loadMapObject(char character, float x, float y);
 	void calculateScroll();
 
@@ -39,6 +40,7 @@ public:
 
 	std::list<Tile*> tiles; 
 	std::list<Enemy*> enemies;
+	Enemy* leader;
 	std::unordered_map<std::string, Attack*> attacks;
 
 	bool controlShoot = false;

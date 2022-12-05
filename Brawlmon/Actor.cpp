@@ -3,7 +3,7 @@
 
 Actor::Actor(std::string filename, float x, float y, int width, int height)
 	:x(x), y(y), width(width), height(height), fileWidth(width), fileHeight(height),
-	vx(0), vy(0), boundingBox(x, y, width, height)
+	vx(0), vy(0), boundingBox(x, y, width/2, height/2)
 {
 	texture = Game::getTexture(filename);
 }

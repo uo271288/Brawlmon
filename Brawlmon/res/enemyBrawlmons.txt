@@ -1,0 +1,2 @@
+fire;FIREMON;150;1.2;Roar,Smash,Scare,Fireblast
+sand;SANDMON;120;1;Scare,Smash,Roar,Dune

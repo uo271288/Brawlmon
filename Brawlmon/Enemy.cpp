@@ -1,12 +1,14 @@
 #include "Enemy.h"
 
-Enemy::Enemy(std::string filename, float x, float y, State state) 
+Enemy::Enemy(std::string filename, float x, float y, State state)
 	:Actor(filename, x, y, 50, 58), state(state) {
 
 	aWalkingRight = new Animation(filename, width, height, 256, 256, 6, 2, 4, 4);
 	aWalkingLeft = new Animation(filename, width, height, 256, 256, 6, 1, 4, 4);
 	aWalkingUp = new Animation(filename, width, height, 256, 256, 6, 3, 4, 4);
 	aWalkingDown = new Animation(filename, width, height, 256, 256, 6, 0, 4, 4);
+	idle = new Animation(filename, width, height, 64, 64, 0, 0, 1, 1, false);
+	animation = idle;
 
 	if (state == State::MovingHorizontal)
 	{
@@ -71,6 +73,11 @@ void Enemy::update() {
 	}
 
 	boundingBox.update(x, y);
+	
+	if (animationEnded)
+	{
+		animation = idle;
+	}
 }
 
 void Enemy::draw(float scrollX, float scrollY) {
