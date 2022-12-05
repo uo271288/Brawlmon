@@ -11,6 +11,7 @@
 #include "Enemy.h"
 #include "CombatLayer.h"
 #include "Attack.h"
+#include "WinLayer.h"
 
 class GameLayer : public Layer
 {

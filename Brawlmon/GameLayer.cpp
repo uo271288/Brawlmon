@@ -62,6 +62,12 @@ void GameLayer::update()
 			space->addStaticActor(enemy);
 		}
 	}
+
+	if (leader->state == State::Defeated) 
+	{
+		Game::getInstance().scale();
+		Game::getInstance().layer = new WinLayer();
+	}
 }
 
 void GameLayer::draw()
