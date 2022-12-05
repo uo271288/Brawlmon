@@ -18,6 +18,8 @@ void GameLayer::init()
 	audioBackground = Audio::createAudio("res/audio_gym.mp3", true);
 	audioBackground->play();
 
+ 	pad = new Pad(57, 384);
+
 	tiles.clear();
 	enemies.clear();
 
@@ -90,6 +92,10 @@ void GameLayer::draw()
 	player->draw(scrollX, scrollY);
 	leader->draw(0, 0);
 
+	if (inputType == InputType::Mouse) {
+		pad->draw();
+	}
+
 	SDL_RenderPresent(Game::getRenderer());
 }
 
@@ -156,8 +162,55 @@ void GameLayer::mouseToControls(SDL_Event event)
 {
 	Layer::mouseToControls(event);
 
-	float motionX = event.motion.x / Game::getInstance().scaleLower;
-	float motionY = event.motion.y / Game::getInstance().scaleLower;
+	float motionX = event.motion.x;
+	float motionY = event.motion.y;
+
+	if (event.type == SDL_MOUSEBUTTONDOWN)
+	{
+		if (pad->containsPoint(motionX, motionY))
+		{
+			pad->clicked = true;
+			controlMoveX = pad->getOrientationX(motionX);
+			controlMoveY = pad->getOrientationY(motionY);
+		}
+	}
+
+	if (event.type == SDL_MOUSEMOTION)
+	{
+		if (pad->clicked && pad->containsPoint(motionX, motionY))
+		{
+			controlMoveX = pad->containsPoint(motionX, motionY);
+
+			if (controlMoveX > -20 && controlMoveX < 20)
+			{
+				controlMoveX = 0;
+			}
+		}
+		else
+		{
+			pad->clicked = false;
+			controlMoveX = 0;
+		}
+
+		if (!pad->containsPoint(motionX, motionY))
+		{
+			controlMoveY = 0;
+		}
+	}
+
+	if (event.type == SDL_MOUSEBUTTONUP)
+	{
+		if (pad->containsPoint(motionX, motionY))
+		{
+			pad->clicked = false;
+			controlMoveX = 0;
+		}
+
+		if (pad->containsPoint(motionX, motionY))
+		{
+			controlMoveY = 0;
+		}
+	}
 }
 
 void GameLayer::gamepadToControls(SDL_Event event)

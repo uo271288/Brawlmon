@@ -13,6 +13,7 @@
 #include "Attack.h"
 #include "WinLayer.h"
 #include "Audio.h"
+#include "Pad.h"
 
 class GameLayer : public Layer
 {
@@ -38,7 +39,10 @@ public:
 	Space* space;
 	Player* player;
 	Background* background;
+
 	Audio* audioBackground;
+
+	Pad* pad;
 
 	std::list<Tile*> tiles; 
 	std::list<Enemy*> enemies;
