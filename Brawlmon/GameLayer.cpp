@@ -17,8 +17,9 @@ void GameLayer::init()
 
 	audioBackground = Audio::createAudio("res/audio_gym.mp3", true);
 	audioBackground->play();
+	isPlaying = true;
 
- 	pad = new Pad(57, 384);
+ 	pad = new Pad(WIDTH * 0.7, HEIGHT * 0.7);
 
 	tiles.clear();
 	enemies.clear();
@@ -47,8 +48,14 @@ void GameLayer::update()
 	space->update();
 	player->update();
 
-	calculateScroll();
+	if (!isPlaying)
+	{
+		audioBackground->play();
+		isPlaying = true;
+	}
 
+	calculateScroll();
+	
 	leader->update();
 	for (auto const& enemy : enemies)
 	{
@@ -58,6 +65,7 @@ void GameLayer::update()
 			controlMoveX = 0;
 			controlMoveY = 0;
 			Game::getInstance().prevLayer = this;
+			isPlaying = false;
 			Game::getInstance().layer = new CombatLayer(player, enemy);
 		}
 

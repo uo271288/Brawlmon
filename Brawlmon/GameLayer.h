@@ -41,6 +41,7 @@ public:
 	Background* background;
 
 	Audio* audioBackground;
+	bool isPlaying = false;
 
 	Pad* pad;
 

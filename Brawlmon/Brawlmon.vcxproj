@@ -152,6 +152,7 @@
     <ClCompile Include="GameLayer.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Lifebar.cpp" />
+    <ClCompile Include="LoseLayer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MenuLayer.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="GameLayer.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="Lifebar.h" />
+    <ClInclude Include="LoseLayer.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MenuLayer.h" />
     <ClInclude Include="Pad.h" />

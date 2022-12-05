@@ -12,6 +12,7 @@
 #include "Text.h"
 #include "Lifebar.h"
 #include "Menu.h"
+#include "Audio.h"
 
 class CombatLayer :
     public Layer
@@ -34,6 +35,8 @@ public:
 	Player* player;
 	Enemy* enemy;
 	Background* background;
+
+	Audio* audioBackground;
 
 	Brawlmonster* playerBrawlmon;
 	Brawlmonster* enemyBrawlmon;

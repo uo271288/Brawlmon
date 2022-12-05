@@ -1,6 +1,6 @@
 #include "CombatLayer.h"
 #include "Game.h"
-#include "GameLayer.h"
+#include "LoseLayer.h"
 
 #include <unordered_set>
 
@@ -14,6 +14,9 @@ void CombatLayer::init()
 {
 	background = new Background("res/combat_background.png", WIDTH * .5f, HEIGHT * .63f);
 	Game::getInstance().scale();
+
+	audioBackground = Audio::createAudio("res/audio_battle.mp3", true);
+	audioBackground->play();
 
 	loadEnemyBrawlmon();
 	loadPlayerBrawlmon();
@@ -72,7 +75,8 @@ void CombatLayer::update()
 		player->brawlmons.remove(delPlayer);
 		if (player->brawlmons.size() == 0)
 		{
-			Game::getInstance().layer = new GameLayer();
+			audioBackground->~Audio();
+			Game::getInstance().layer = new LoseLayer();
 		}
 		else
 		{

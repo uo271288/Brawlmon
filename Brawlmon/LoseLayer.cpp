@@ -1,24 +1,22 @@
-#include "MenuLayer.h"
+#include "LoseLayer.h"
 #include "Game.h"
 #include "Gamelayer.h"
 
-MenuLayer::MenuLayer()
+LoseLayer::LoseLayer()
 	: Layer()
 {
-	Game::getInstance().scale();
 	init();
 }
 
-void MenuLayer::init() 
+void LoseLayer::init() 
 {
-	background = new Background("res/menu.png", WIDTH * .5f, HEIGHT * .63f);
-	button = new Actor("res/boton_jugar.png", WIDTH * .5f, HEIGHT * .7f, 232, 72);
+	background = new Background("res/lose.png", WIDTH * .5f, HEIGHT * .63f);
 
-	audioBackground = Audio::createAudio("res/intro.mp3", true);
+	audioBackground = Audio::createAudio("res/lose.mp3", true);
 	audioBackground->play();
 }
 
-void MenuLayer::keysToControls(SDL_Event event)
+void LoseLayer::keysToControls(SDL_Event event)
 {
 	Layer::keysToControls(event);
 
@@ -34,7 +32,7 @@ void MenuLayer::keysToControls(SDL_Event event)
 	}
 }
 
-void MenuLayer::mouseToControls(SDL_Event event)
+void LoseLayer::mouseToControls(SDL_Event event)
 {
 	Layer::mouseToControls(event);
 
@@ -43,32 +41,28 @@ void MenuLayer::mouseToControls(SDL_Event event)
 
 	if (event.type == SDL_MOUSEBUTTONDOWN)
 	{
-		if (button->containsPoint(motionX, motionY)) 
-		{
-			controlContinue = true;
-		}
+		controlContinue = true;
 	}
-
 }
 
-void MenuLayer::gamepadToControls(SDL_Event event)
+void LoseLayer::gamepadToControls(SDL_Event event)
 {
 	Layer::gamepadToControls(event);
 }
 
-void MenuLayer::processControls() 
+void LoseLayer::processControls() 
 {
 	Layer::processControls();
 	if (controlContinue) 
 	{
 		controlContinue = false;
+		//Game::getInstance().scale();
 		Game::getInstance().layer = new GameLayer();
 	}
 }
-void MenuLayer::draw() 
+void LoseLayer::draw() 
 {
 	background->draw();
-	button->draw();
 
 	SDL_RenderPresent(Game::getRenderer());
 }

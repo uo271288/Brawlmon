@@ -2,6 +2,7 @@
 
 #include "Layer.h"
 #include "Background.h"
+#include "Audio.h"
 
 class WinLayer :
 	public Layer
@@ -18,6 +19,8 @@ public:
 
 private:
 	bool controlContinue = false;
+
+	Audio* audioBackground;
 
 	Background* background;
 };

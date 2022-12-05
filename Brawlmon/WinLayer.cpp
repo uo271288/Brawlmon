@@ -8,8 +8,12 @@ WinLayer::WinLayer()
 	init();
 }
 
-void WinLayer::init() {
-	background = new Background("res/win.png", WIDTH * .5f, HEIGHT * .5f);
+void WinLayer::init() 
+{
+	background = new Background("res/win.png", WIDTH * .5f, HEIGHT * .63f);
+
+	audioBackground = Audio::createAudio("res/win.mp3", true);
+	audioBackground->play();
 }
 
 void WinLayer::keysToControls(SDL_Event event)
@@ -46,15 +50,18 @@ void WinLayer::gamepadToControls(SDL_Event event)
 	Layer::gamepadToControls(event);
 }
 
-void WinLayer::processControls() {
+void WinLayer::processControls() 
+{
 	Layer::processControls();
-	if (controlContinue) {
+	if (controlContinue) 
+	{
 		controlContinue = false;
 		Game::getInstance().scale();
 		Game::getInstance().layer = new MenuLayer();
 	}
 }
-void WinLayer::draw() {
+void WinLayer::draw() 
+{
 	background->draw();
 
 	SDL_RenderPresent(Game::getRenderer());
