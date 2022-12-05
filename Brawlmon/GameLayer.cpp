@@ -15,6 +15,9 @@ void GameLayer::init()
 	space = new Space();
 	background = new Background("res/gym_background.png", WIDTH * 0.5, HEIGHT * 0.3);
 
+	audioBackground = Audio::createAudio("res/audio_gym.mp3", true);
+	audioBackground->play();
+
 	tiles.clear();
 	enemies.clear();
 
@@ -63,7 +66,7 @@ void GameLayer::update()
 		}
 	}
 
-	if (leader->state == State::Defeated) 
+	if (leader->state == State::Defeated)
 	{
 		Game::getInstance().scale();
 		Game::getInstance().layer = new WinLayer();
@@ -85,7 +88,7 @@ void GameLayer::draw()
 	}
 
 	player->draw(scrollX, scrollY);
-	leader->draw(0,0);
+	leader->draw(0, 0);
 
 	SDL_RenderPresent(Game::getRenderer());
 }
