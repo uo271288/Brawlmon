@@ -1,5 +1,6 @@
 #include "CombatLayer.h"
 #include "Game.h"
+#include "GameLayer.h"
 
 #include <unordered_set>
 
@@ -11,7 +12,7 @@ CombatLayer::CombatLayer(Player* player, Enemy* enemy)
 
 void CombatLayer::init()
 {
-	background = new Background("res/combat_background.png", 191, 302);
+	background = new Background("res/combat_background.png", WIDTH * .5f, HEIGHT * .63f);
 	Game::getInstance().scale();
 
 	loadEnemyBrawlmon();

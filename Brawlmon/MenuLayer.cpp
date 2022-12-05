@@ -5,12 +5,13 @@
 MenuLayer::MenuLayer()
 	: Layer()
 {
+	Game::getInstance().scale();
 	init();
 }
 
 void MenuLayer::init() 
 {
-	background = new Background("res/menu_fondo.png", WIDTH * .5f, HEIGHT * .5f);
+	background = new Background("res/menu.png", WIDTH * .5f, HEIGHT * .63f);
 	button = new Actor("res/boton_jugar.png", WIDTH * .5f, HEIGHT * .7f, 232, 72);
 }
 
@@ -21,10 +22,9 @@ void MenuLayer::keysToControls(SDL_Event event)
 	if (event.type == SDL_KEYDOWN)
 	{
 		int code = event.key.keysym.sym;
-		// Pulsada
 		switch (code)
 		{
-		case SDLK_SPACE: // dispara
+		case SDLK_SPACE:
 			controlContinue = true;
 			break;
 		}

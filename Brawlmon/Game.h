@@ -6,7 +6,7 @@
 #include <SDL_image.h>
 
 #include "Layer.h"
-#include "GameLayer.h"
+#include "MenuLayer.h"
 
 #define HEIGHT 480
 #define WIDTH 380
@@ -44,7 +44,7 @@ public:
 	}
 
 	void scale();
-	bool scaledToMax = false;
+	bool scaledToMax = true;
 	float scaleLower = 1.f;
 
 	void loop();
