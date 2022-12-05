@@ -75,7 +75,6 @@ void CombatLayer::update()
 		player->brawlmons.remove(delPlayer);
 		if (player->brawlmons.size() == 0)
 		{
-			audioBackground->~Audio();
 			Game::getInstance().layer = new LoseLayer();
 		}
 		else
